@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import { combineReducers } from 'redux'
-import goodsReducer from '../Reducers/Goods-reduser'
-import filterReducer from '../Reducers/Filter-reducer'
+import goodsReducer from './Goods-reducer'
+import filterReducer from '../Redux/Filter-reducer'
 
 export const rootReducer = combineReducers({
     goods: goodsReducer,

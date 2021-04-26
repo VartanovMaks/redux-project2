@@ -1,8 +1,7 @@
-import {
-    DSC_PRICE,
-    ASC_PRICE,
-    CATEGORIES_TO_FILTER
-} from '../Actions/Action-types'
+const DSC_PRICE = 'DSC_PRICE';
+const ASC_PRICE = 'ASC_PRICE';
+const CATEGORIES_TO_FILTER = 'CATEGORIES_TO_FILTER';
+
 
 const initialState = {
     sortByPrice:'DSC_PRICE',
@@ -10,8 +9,6 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action)=>{
-    console.log('редюссер фильтра', action)
-
     switch (action.type){
       case DSC_PRICE:{
         return {
@@ -35,6 +32,21 @@ const reducer = (state = initialState, action)=>{
       default :
       return state;
     }
+}
+
+const dscSortOrder = ()=>({type:DSC_PRICE});
+const ascSortOrder = ()=>({type:ASC_PRICE});
+const сategoriesToFilter = (categoriesToFilter)=>(
+    {type:CATEGORIES_TO_FILTER, payload:categoriesToFilter}
+);
+
+export {
+    dscSortOrder,
+    ascSortOrder,
+    сategoriesToFilter,
+    DSC_PRICE,
+    ASC_PRICE,
+    CATEGORIES_TO_FILTER,
 }
 
 export default reducer;
