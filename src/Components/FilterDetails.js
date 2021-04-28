@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {useSelector, useDispatch, getState} from 'react-redux';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {store} from '../Redux/Store'
 import {dscSortOrder, ascSortOrder, сategoriesToFilter} from '../Redux/Filter-reducer'
 import {Filter} from './Filter'
@@ -21,16 +21,27 @@ export const FilterDetails = () =>{
         // находим выделенные элемент radio
         const sortByPrice = filter.find ( el => el.checked === true )
         // находим список категорий по которым будем сортировать
-        const categories = Array.from(filter.find(el => el.localName === 'select'))
-        const sortByCategories = categories.filter( el=>el.selected===true).map(el=>el.value);
+        const select = filter.find(el => el.localName === 'select')
+        let sortByCategories=[]
+        // вдруг не было задано ни одной категории вообще
+        if ( select !== undefined ){
+            // выдергиваем весь список категорий
+             let categories = Array.from(select)
+             //Формируем массив объектов категорий с полем checked для передачи в диспатч
+             for(let i=0; i<categories.length; i++){
+                 sortByCategories[i].name= categories.value;
+                 sortByCategories[i].checked = categories.checked;
+             }
+        }
         dispatch(сategoriesToFilter(sortByCategories))
-        dispatch(sortByPrice.value == DSC_PRICE ? dscSortOrder() : ascSortOrder() )
+        dispatch(sortByPrice.value === DSC_PRICE ? dscSortOrder() : ascSortOrder() )
         console.log('store after',store.getState());
-      }
-    
+    }
+    console.log('filterByCategory',filterByCategory);
+
     return (
         <div>
-            <Filter sortDirection={sortByPrice} onSubmit={onSubmit} categories={filterByCategory}/>
+            <Filter sortDirection={sortByPrice} onSubmit={onSubmit} />
         </div>
     )
 }
